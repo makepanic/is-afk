@@ -16,7 +16,7 @@ export default class Afk {
 
   private previousState: number = State.Visible;
   private idleTimer: number;
-  private idleTimeout: number = 60 * 1000;
+  readonly idleTimeout: number = 60 * 1000;
   private listenerOptions = {capture: false, passive: true};
 
   constructor(private statusChangeCallback: StateChangeCallback) {
@@ -28,6 +28,7 @@ export default class Afk {
     document.addEventListener('touchstart', this.wakeIdle, this.listenerOptions);
     document.addEventListener('scroll', this.wakeIdle, this.listenerOptions);
     document.addEventListener('visibilitychange', this.visbilityChange, this.listenerOptions);
+    this.wakeIdle();
   }
 
   public destroy(){
