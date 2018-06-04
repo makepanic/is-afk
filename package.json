@@ -1,0 +1,19 @@
+{
+  "name": "is-afk",
+  "version": "1.0.0",
+  "description": "library that allows you to react to various useragent states (idle, hidden, visible)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --config",
+    "build-watch": "rollup --config --watch"
+  },
+  "author": "Christian",
+  "license": "MIT",
+  "dependencies": {
+    "rollup": "^0.59.4",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "typescript": "^2.9.1"
+  }
+}
