@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "description": "library that allows you to react to various useragent states (idle, hidden, visible)",
   "scripts": {
-    "pretest": "yarn build-test",
+    "pretest": "yarn build-test && yarn lint",
     "test": "testem ci",
     "test-watch": "testem",
     "build": "rollup --config",
     "build-watch": "rollup --config --watch",
     "build-test": "rollup --config rollup.config.test.js",
-    "build-test-watch": "rollup --config rollup.config.test.js --watch"
+    "build-test-watch": "rollup --config rollup.config.test.js --watch",
+    "lint": "tslint -c tslint.json 'lib/**/*.ts'",
+    "prettier": "prettier --single-quote --write --parser typescript \"{lib,tests}/**/*.ts\""
   },
   "author": "Christian",
   "license": "MIT",
   "devDependencies": {
     "@types/qunit": "^2.5.1",
     "@types/sinon": "^5.0.1",
+    "prettier": "^1.13.4",
     "qunit": "^2.6.1",
     "rollup": "^0.59.4",
     "rollup-plugin-commonjs": "^9.1.3",
@@ -24,6 +27,7 @@
     "rollup-plugin-typescript": "^0.8.1",
     "sinon": "^5.0.10",
     "testem": "^2.6.0",
+    "tslint": "^5.10.0",
     "typescript": "^2.9.1"
   }
 }

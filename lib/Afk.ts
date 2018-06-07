@@ -3,13 +3,11 @@
  */
 export enum State {
   Visible = 0b000,
-  Hidden  = 0b001,
-  Idle    = 0b010,
+  Hidden = 0b001,
+  Idle = 0b010
 }
 
-interface StateChangeCallback {
-  (newState: State): void
-}
+type StateChangeCallback = (newState: State) => void;
 
 export default class Afk {
   /**
@@ -20,8 +18,8 @@ export default class Afk {
 
   private previousState: number = State.Visible;
   private idleTimer: number;
-  readonly idleTimeout: number = 60 * 1000;
-  private listenerOptions = {capture: false, passive: true};
+  private readonly idleTimeout: number = 60 * 1000;
+  private listenerOptions = { capture: false, passive: true };
   private destroyed: boolean = false;
 
   constructor(private statusChangeCallback: StateChangeCallback) {
@@ -30,23 +28,82 @@ export default class Afk {
 
     document.addEventListener('mousemove', this.wakeIdle, this.listenerOptions);
     document.addEventListener('keyup', this.wakeIdle, this.listenerOptions);
-    document.addEventListener('touchstart', this.wakeIdle, this.listenerOptions);
+    document.addEventListener(
+      'touchstart',
+      this.wakeIdle,
+      this.listenerOptions
+    );
     document.addEventListener('scroll', this.wakeIdle, this.listenerOptions);
-    document.addEventListener('visibilitychange', this.visbilityChange, this.listenerOptions);
+    document.addEventListener(
+      'visibilitychange',
+      this.visbilityChange,
+      this.listenerOptions
+    );
     this.wakeIdle();
+  }
+
+  /**
+   * Method to manually change the current afk state to include Idle
+   */
+  public idle() {
+    this.maybeChangeState(State.Idle);
+  }
+
+  /**
+   * Method to manually change the current afk state to include hidden
+   */
+  public hidden() {
+    this.maybeChangeState(State.Hidden);
+  }
+
+  /**
+   * Method to manually change the current afk state to Visible.
+   */
+  public visible() {
+    if (this.state !== State.Visible) {
+      // visible is nuking everything as focus is also resetting idle
+      this.state = State.Visible;
+      this.wakeIdle();
+      this.stateChanged();
+    }
+  }
+
+  /**
+   * Method to check if the current afk state includes a given state
+   * @param {State} state
+   * @return {boolean} true if given state included in afk state
+   */
+  public is(state: State): boolean {
+    if (state === State.Visible) {
+      return (this.state & 0b001) === State.Visible;
+    } else {
+      return Boolean(this.state & state);
+    }
   }
 
   /**
    * Function that should be called when listening to afk state changes isn't wanted anymore.
    * Removes idle check listeners and clears idle timer.
    */
-  public destroy(){
+  public destroy() {
     this.destroyed = true;
-    document.removeEventListener('mousemove', this.wakeIdle, this.listenerOptions);
+    document.removeEventListener(
+      'mousemove',
+      this.wakeIdle,
+      this.listenerOptions
+    );
     document.removeEventListener('keyup', this.wakeIdle, this.listenerOptions);
-    document.removeEventListener('touchstart', this.wakeIdle, this.listenerOptions);
+    document.removeEventListener(
+      'touchstart',
+      this.wakeIdle,
+      this.listenerOptions
+    );
     document.removeEventListener('scroll', this.wakeIdle, this.listenerOptions);
-    document.removeEventListener('visibilitychange', this.visbilityChange, this.listenerOptions);
+    document.removeEventListener(
+      'visibilitychange',
+      this.visbilityChange,
+      this.listenerOptions
+    );
     if (this.idleTimer) clearTimeout(this.idleTimer);
   }
 
@@ -80,49 +137,10 @@ export default class Afk {
     this.idleTimer = window.setTimeout(() => this.idle(), this.idleTimeout);
   }
 
-  /**
-   * Method to manually change the current afk state to include Idle
-   */
-  idle() {
-    this.maybeChangeState(State.Idle);
-  }
-
-  /**
-   * Method to manually change the current afk state to include hidden
-   */
-  hidden() {
-    this.maybeChangeState(State.Hidden);
-  }
-
-  /**
-   * Method to manually change the current afk state to Visible.
-   */
-  visible() {
-    if (this.state !== State.Visible) {
-      // visible is nuking everything as focus is also resetting idle
-      this.state = State.Visible;
-      this.wakeIdle();
-      this.stateChanged();
-    }
-  }
-
   private stateChanged() {
     if (this.destroyed) return;
 
     this.previousState = this.state;
     this.statusChangeCallback(this.state);
-  }
-
-  /**
-   * Method to check if the current afk state includes a given state
-   * @param {State} state
-   * @return {boolean} true if given state included in afk state
-   */
-  is(state: State): boolean {
-    if (state === State.Visible) {
-      return (this.state & 0b001) === State.Visible;
-    } else {
-      return this.state & state;
-    }
   }
 }
