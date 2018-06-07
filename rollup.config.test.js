@@ -8,6 +8,7 @@ export default {
   input: 'tests/**/*.ts',
 
   output: {
+    name: 'isAfk',
     file: 'dist/test-afk.js',
     format: 'iife'
   },

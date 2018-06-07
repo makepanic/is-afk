@@ -2,6 +2,8 @@ const IN_CI = !!process.env.TRAVIS;
 
 module.exports = {
   disable_watching: IN_CI,
+  "test_page": "tests/index.html",
+
   "framework": "qunit",
   "src_files": [
     "lib/**/*.ts",
@@ -9,6 +11,8 @@ module.exports = {
   ],
   "serve_files": [
     "node_modules/sinon/pkg/sinon.js",
+    "node_modules/qunit/qunit/qunit.js",
+    "node_modules/qunit/qunit/qunit.css",
     "dist/test-afk.js",
   ],
 

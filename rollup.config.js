@@ -4,12 +4,21 @@ import typescript from 'typescript';
 import commonjs from 'rollup-plugin-commonjs';
 
 export default {
-  entry: './index.ts',
+  entry: './lib/Afk.ts',
 
-  output: {
-    file: 'dist/is-afk.js',
-    format: 'iife'
-  },
+  output: [{
+    name: 'is-afk',
+    file: 'dist/is-afk.umd.js',
+    format: 'umd'
+  }, {
+    name: 'is-afk',
+    file: 'dist/is-afk.cjs.js',
+    format: 'cjs'
+  }, {
+    name: 'is-afk',
+    file: 'dist/is-afk.es.js',
+    format: 'es'
+  },],
 
   watch: {
     include: [

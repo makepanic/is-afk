@@ -1,14 +1,9 @@
 import {default as Afk, State} from "../../lib/Afk";
+import {emitEvent} from "../helpers/events";
 
 const {module, test} = QUnit;
 
-function emitEvent(target: EventTarget, eventName: string) {
-  const event = new Event(eventName);
-  target.dispatchEvent(event);
-}
-
-const noop = () => {
-};
+const noop = () => {};
 
 module("Afk", function () {
   module('is', function () {
@@ -66,8 +61,8 @@ module("Afk", function () {
     })
   });
 
-  module('idle', function(){
-    test('sets idle after timeout', function(assert) {
+  module('idle', function () {
+    test('sets idle after timeout', function (assert) {
       const clock = sinon.useFakeTimers();
       const afk = new Afk(noop);
 
@@ -80,5 +75,13 @@ module("Afk", function () {
       emitEvent(document, 'mousemove');
       assert.notOk(afk.is(State.Idle));
     });
+  });
+
+  test('destroy isn\'t triggering the callback on state change', function (assert) {
+    const stateChangeCallback = sinon.spy();
+    const afk = new Afk(stateChangeCallback);
+    afk.destroy();
+    afk.idle();
+    assert.notOk(stateChangeCallback.called);
   });
 });
