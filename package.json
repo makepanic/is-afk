@@ -11,7 +11,8 @@
     "build-test": "rollup --config rollup.config.test.js",
     "build-test-watch": "rollup --config rollup.config.test.js --watch",
     "lint": "tslint -c tslint.json 'lib/**/*.ts'",
-    "prettier": "prettier --single-quote --write --parser typescript \"{lib,tests}/**/*.ts\""
+    "prettier": "prettier --single-quote --write --parser typescript \"{lib,tests}/**/*.ts\"",
+    "prepublishOnly": "yarn test && yarn build"
   },
   "author": "Christian",
   "license": "MIT",
