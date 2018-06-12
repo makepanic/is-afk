@@ -15,6 +15,7 @@
     "prepublishOnly": "yarn test && yarn build"
   },
   "author": "Christian",
+  "homepage": "https://github.com/makepanic/is-afk",
   "license": "MIT",
   "devDependencies": {
     "@types/qunit": "^2.5.1",
@@ -30,5 +31,9 @@
     "testem": "^2.6.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makepanic/is-afk.git"
   }
 }
