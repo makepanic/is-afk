@@ -3,6 +3,11 @@ import resolve from 'rollup-plugin-node-resolve';
 import typescript from 'typescript';
 import commonjs from 'rollup-plugin-commonjs';
 import multiEntry from "rollup-plugin-multi-entry";
+import tsconfig from './tsconfig.json';
+
+tsconfig.compilerOptions.sourceMap = true;
+tsconfig.compilerOptions.emitDeclarationOnly = false;
+tsconfig.compilerOptions.declaration = false;
 
 export default {
   input: 'tests/**/*.ts',
@@ -22,7 +27,10 @@ export default {
   },
 
   plugins: [
-    typescriptPlugin({typescript}),
+    typescriptPlugin({
+      typescript,
+      ...tsconfig.compilerOptions,
+    }),
     resolve(),
     commonjs(),
     multiEntry(),

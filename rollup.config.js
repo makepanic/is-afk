@@ -2,9 +2,14 @@ import typescriptPlugin from 'rollup-plugin-typescript';
 import resolve from 'rollup-plugin-node-resolve';
 import typescript from 'typescript';
 import commonjs from 'rollup-plugin-commonjs';
+import tsconfig from './tsconfig.json';
+
+tsconfig.compilerOptions.sourceMap = true;
+tsconfig.compilerOptions.emitDeclarationOnly = false;
+tsconfig.compilerOptions.declaration = false;
 
 export default {
-  entry: './lib/Afk.ts',
+  entry: './index.ts',
 
   output: [{
     name: 'is-afk',
@@ -27,7 +32,10 @@ export default {
   },
 
   plugins: [
-    typescriptPlugin({typescript}),
+    typescriptPlugin({
+      typescript,
+      ...tsconfig.compilerOptions,
+    }),
     resolve(),
     commonjs(),
   ]

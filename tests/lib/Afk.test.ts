@@ -1,4 +1,4 @@
-import { default as Afk, State } from '../../lib/Afk';
+import { default as Afk, State } from '../../index';
 import { emitEvent } from '../helpers/events';
 
 const { module, test } = QUnit;

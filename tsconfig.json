@@ -1,14 +1,12 @@
 {
   "include": [
-    "lib/**/*.ts",
     "index.ts"
   ],
-  "sourceMap": true,
   "compilerOptions": {
     "pretty": true,
-    "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "noImplicitAny": true,
+    "emitDeclarationOnly": true,
     "target": "es2017",
     "lib": [
       "DOM",

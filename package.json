@@ -6,7 +6,7 @@
     "pretest": "yarn build-test && yarn lint",
     "test": "testem ci",
     "test-watch": "testem",
-    "build": "rollup --config",
+    "build": "rollup --config && tsc",
     "build-watch": "rollup --config --watch",
     "build-test": "rollup --config rollup.config.test.js",
     "build-test-watch": "rollup --config rollup.config.test.js --watch",
@@ -14,6 +14,7 @@
     "prettier": "prettier --single-quote --write --parser typescript \"{lib,tests}/**/*.ts\"",
     "prepublishOnly": "yarn test && yarn build"
   },
+  "types": "./index.d.ts",
   "author": "Christian",
   "homepage": "https://github.com/makepanic/is-afk",
   "license": "MIT",
